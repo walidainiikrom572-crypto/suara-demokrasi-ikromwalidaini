@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suara Demokrasi | Ikromwalidaini</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;500;600;700&display=swap');
+        
+        :root {
+            --bg-dark: #050508;
+            --bg-card: rgba(17, 24, 39, 0.7);
+            --gold: #f59e0b;
+            --amber: #d97706;
+            --crimson: #dc143c;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --accent-blue: #3b82f6;
+        }
+        
+        * {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        .font-serif {
+            font-family: 'Playfair Display', serif;
+        }
+        
+        /* Latar gradasi dinamis */
+        .hero-bg {
+            background: 
+                radial-gradient(ellipse at top left, rgba(220, 38, 38, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at bottom right, rgba(30, 64, 175, 0.12) 0%, transparent 50%),
+                linear-gradient(180deg, #050508 0%, #111827 100%);
+        }
+        
+        /* Garis berkedip */
+        .glow-divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--gold), var(--crimson), var(--gold), transparent);
+            animation: glow-pulse 3s ease-in-out infinite;
+        }
+        
+        @keyframes glow-pulse {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+        
+        /* Kartu puisi */
+        .poem-card {
+            background: var(--bg-card);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(245, 158, 11, 0.1);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.6s cubic-bezier(0.17, 0.55, 0.55, 1);
+        }
+        
+        .poem-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(245, 158, 11, 0.05), transparent);
+            transition: left 0.8s ease;
+        }
+        
+        .poem-card:hover::before {
+            left: 100%;
+        }
+        
+        .poem-card:hover {
+            border-color: rgba(220, 20, 60, 0.35);
+            box-shadow: 
+                0 30px 60px rgba(0, 0, 0, 0.5),
+                0 0 0 1px rgba(245, 158, 11, 0.05) inset;
+            transform: translateY(-6px);
+        }
+        
+        /* Animasi muncul */
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Animasi mengetik */
+        .typewriter {
+            border-right: 2px solid var(--gold);
+            animation: blink 0.8s step-end infinite;
+        }
+        
+        @keyframes blink {
+            50% { border-color: transparent; }
+        }
+        
+        /* Navbar */
+        .nav-glass {
+            background: rgba(5, 5, 8, 0.75);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+        }
+        
+        /* Teks berkedip */
+        .pulse-text {
+            animation: pulse-text 2.5s ease-in-out infinite;
+        }
+        
+        @keyframes pulse-text {
+            0%, 100% { opacity: 0.85; }
+            50% { opacity: 1; }
+        }
+        
+        /* Partikel latar */
+        .floating-particle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(245, 158, 11, 0.1);
+            animation: float-random 15s ease-in-out infinite;
+        }
+        
+        @keyframes float-random {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(10px, -15px) scale(1.1); }
+            50% { transform: translate(-5px, 10px) scale(0.9); }
+            75% { transform: translate(-10px, -5px) scale(1.05); }
+        }
+        
+        /* Penanda kutipan */
+        .quote-mark {
+            font-size: 6rem;
+            line-height: 1;
+            color: rgba(245, 158, 11, 0.08);
+            position: absolute;
+            top: -20px;
+            left: 20px;
+            font-family: Georgia, serif;
+        }
+        
+        /* Tombol scroll ke atas */
+        .scroll-indicator {
+            animation: bounce-slow 2s ease-in-out infinite;
+        }
+        
+        @keyframes bounce-slow {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(10px); }
+        }
+        
+        /* Garis samping */
+        .side-line {
+            width: 3px;
+            background: linear-gradient(180deg, var(--crimson), var(--gold), transparent);
+        }
+        
+        /* Teks penekanan */
+        .text-highlight {
+            background: linear-gradient(90deg, var(--crimson), var(--gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+    </style>
+</head>
+<body class="hero-bg">
+
+    <!-- Partikel Latar -->
+    <div class="fixed inset-0 pointer-events-none overflow-hidden">
+        <div class="floating-particle w-96 h-96 top-10 -left-48" style="animation-delay: 0s;"></div>
+        <div class="floating-particle w-80 h-80 top-1/3 -right-40" style="animation-delay: 5s;"></div>
+        <div class="floating-particle w-72 h-72 bottom-0 left-1/4" style="animation-delay: 10s;"></div>
+    </div>
+
+    <!-- Navbar -->
+    <nav class="fixed top-0 left-0 right-0 z-50 nav-glass" id="navbar">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="text-xl font-bold tracking-wider">
+                <span class="text-crimson">IKROM</span><span class="text-amber">WALIDAINI</span>
+            </a>
+            <div class="hidden md:flex space-x-8 text-sm">
+                <a href="#beranda" class="hover:text-amber-400 transition-colors">Beranda</a>
+                <a href="#puisi" class="hover:text-amber-400 transition-colors">Puisi Kritis</a>
+                <a href="#prinsip" class="hover:text-amber-400 transition-colors">Prinsip Demokrasi</a>
+            </div>
+            <div class="flex items-center gap-2 text-xs text-slate-400">
+                <span class="w-2 h-2 bg-green-500 rounded-full"></span>
+                <span>Suara Bebas Demokrasi</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="beranda" class="min-h-screen flex flex-col justify-center items-center pt-24 px-6 relative z-10">
+        <div class="max-w-4xl mx-auto text-center reveal">
+            <p class="text-amber-500/70 text-sm tracking-widest uppercase mb-4">— Demokrasi Menuntut Akuntabilitas —</p>
+            <h1 class="text-4xl md:text-6xl lg:text-7xl font-serif font-bold mb-8 leading-tight">
+                Ketika Keputusan<br>
+                <span class="text-highlight">Melupakan Rakyat</span>
+            </h1>
+            <div class="glow-divider w-64 mx-auto mb-8"></div>
+            <p class="text-lg md:text-xl text-slate-400 max-w-3xl mx-auto mb-10 leading-relaxed">
+                "Kekuasaan bukan hak istimewa, melainkan amanah yang harus dipertanggungjawabkan.<br>
+                Demokrasi bukan sekadar memilih pada hari pemilu, melainkan pengawasan yang berlangsung setiap hari."
+            </p>
+            <p class="text-amber-400/70 italic text-lg">— Ikromwalidaini</p>
+        </div>
+        
+        <div class="absolute bottom-12 scroll-indicator text-slate-500">
+            <i class="fa fa-angle-down fa-2x"></i>
+        </div>
+    </section>
+
+    <!-- Puisi Kritis -->
+    <section id="puisi" class="py-24 px-6 relative z-10">
+        <div class="max-w-4xl mx-auto">
+            <div class="text-center mb-16 reveal">
+                <span class="text-crimson/80 text-sm tracking-widest uppercase">KRITIK & REFLEKSI</span>
+                <h2 class="text-3xl md:text-5xl font-serif font-bold mt-3 mb-4">Sebuah Surat Terbuka untuk Pemimpin</h2>
+                <p class="text-slate-500">Dengan keberanian, kita menyampaikan kebenaran demi negeri yang lebih baik</p>
+                <div class="glow-divider w-48 mx-auto mt-6"></div>
+            </div>
+
+            <!-- Puisi 1 -->
+            <div class="poem-card rounded-2xl p-8 md:p-12 mb-10 reveal relative">
+                <span class="quote-mark">"</span>
+                <div class="side-line absolute left-0 top-0 bottom-0 rounded-l-2xl"></div>
+                
+                <h3 class="text-xl md:text-2xl font-serif text-center mb-8 text-amber-400">Keputusan di Ruang Ber-AC, Realita di Jalan Tanpa Penerangan</h3>
+                
+                <div class="space-y-5 text-lg md:text-xl leading-loose text-slate-300 pl-4">
+                    <p class="text-center">
+                        Bapak membuat kebijakan dengan satu pikiran sendiri,<br>
+                        Seolah kebenaran hanya ada di satu sudut pandang.<br>
+                        Konsultasi hanyalah formalitas, masukan diabaikan,<br>
+                        Karena Bapak yakin — hanya Bapak yang paling tahu jalan.
+                    </p>
+                    <br>
+                    <p class="text-center">
+                        Demokrasi adalah mendengarkan suara yang berbeda,<br>
+                        Bukan membungkam yang tak sejalan dengan kehendak.<br>
+                        Jika kebijakan selalu memihak pada yang kuat,<br>
+                        Maka rakyat kecil tak lagi merasa punya tempat pulang.
+                    </p>
+                    <br>
+                    <p class="text-center">
+                        Keputusan yang diambil tanpa mendengar pihak lemah,<br>
+                        Adalah awal dari runtuhnya kepercayaan bangsa.<br>
+                        Ingatlah Bapak — kursi itu bukan takhta warisan,<br>
+                        Ia titipan rakyat, yang suatu hari akan diminta pertanggungjawaban.
+                    </p>
+                    <br>
+                    <p class="text-center text-amber-300 font-medium">
+                        Demokrasi tak boleh mati karena satu kehendak,<br>
+                        Negara tak boleh berjalan hanya pada satu arah.<br>
+                        Dengarlah, berdiskusilah, pertimbangkanlah bersama —<br>
+                        Karena keputusan yang adil lahir dari banyak suara, bukan satu kehendak.
+                    </p>
+                </div>
+                
+                <p class="text-right text-sm text-slate-500 mt-10 italic">— Ikromwalidaini</p>
+            </div>
+
+            <!-- Puisi 2 -->
+            <div class="poem-card rounded-2xl p-8 md:p-12 mb-10 reveal relative">
+                <span class="quote-mark">"</span>
+                <div class="side-line absolute left-0 top-0 bottom-0 rounded-l-2xl"></div>
+                
+                <h3 class="text-xl md:text-2xl font-serif text-center mb-8 text-amber-400">Kebijakan Harus Berpihak pada Rakyat, Bukan Kepentingan Tertentu</h3>
+                
+                <div class="space-y-5 text-lg md:text-xl leading-loose text-slate-300 pl-4">
+                    <p class="text-center">
+                        Bapak berkata — ini demi kemajuan bangsa,<br>
+                        Tapi rakyat bertanya — kemajuan untuk siapa?<br>
+                        Ketika kebijakan lebih menguntungkan sekelompok elit,<br>
+                        Dan beban berat justru jatuh ke pundak yang sudah lemah —<br>
+                        Itu bukan kemajuan, itu ketidakadilan yang tertulis rapi.
+                    </p>
+                    <br>
+                    <p class="text-center">
+                        Demokrasi sejati mengutamakan kepentingan umum,<br>
+                        Bukan keuntungan segelintir orang berkuasa.<br>
+                        Jika undang-undang dibuat tanpa partisipasi publik,<br>
+                        Maka itu bukan hukum — itu alat untuk melanggengkan kuasa.
+                    </p>
+                    <br>
+                    <p class="text-center">
+                        Seorang pemimpin yang benar-benar mencintai rakyatnya,<br>
+                        Akan memastikan setiap kebijakan menyentuh yang paling bawah.<br>
+                        Bukan yang paling dekat dengan kursi kekuasaan.<br>
+                        Karena ukuran keberhasilan pemerintahan bukan kekayaan negara,<br>
+                        Tapi kesejahteraan warga negaranya, terutama yang tersisih.
+                    </p>
+                    <br>
+                    <p class="text-center text-amber-300 font-medium">
+                        Kekuasaan terbesar bukanlah memerintah tanpa hambatan,<br>
+                        Tapi melayani dengan rendah hati dan mendengarkan dengan telinga terbuka.<br>
+                        Jika Bapak lupa siapa yang mengangkat Bapak ke sana —<br>
+                        Sejarah akan mencatat: Pemimpin itu jatuh karena lupa pada rakyatnya.
+                    </p>
+                </div>
+                
+                <p class="text-right text-sm text-slate-500 mt-10 italic">— Ikromwalidaini</p>
+            </div>
+
+            <!-- Puisi 3 -->
+            <div class="poem-card rounded-2xl p-8 md:p-12 reveal relative">
+                <span class="quote-mark">"</span>
+                <div class="side-line absolute left-0 top-0 bottom-0 rounded-l-2xl"></div>
+                
+                <h3 class="text-xl md:text-2xl font-serif text-center mb-8 text-amber-400">Demokrasi Tak Boleh Dikorbankan atas Nama Stabilitas</h3>
+                
+                <div class="space-y-5 text-lg md:text-xl leading-loose text-slate-300 pl-4">
+                    <p class="text-center">
+                        Sering terdengar — demi ketertiban, kebebasan dibatasi.<br>
+                        Demi keamanan, ruang partisipasi rakyat diperkecil.<br>
+                        Ketahuilah Bapak — ketenangan yang dibangun di atas kebisuan,<br>
+                        Bukan kedamaian, itu keheningan sebelum badai datang.
+                    </p>
+                    <br>
+                    <p class="text-center">
+                        Demokrasi bukanlah hambatan bagi kemajuan,<br>
+                        Ia jalan yang kadang lambat namun paling terjamin keadilannya.<br>
+                        Keputusan sepihak memang cepat,<br>
+                        Tapi dampak yang ditimbulkan sering kali tak terukur kerusakannya.
+                    </p>
+                    <br>
+                    <p class="text-center text-amber-300 font-medium">
+                        Negara kita besar, rakyatnya beragam,<br>
+                        Tak mungkin satu pikiran menampung semua harapan.<br>
+                        Dengarlah yang berbeda, hargailah yang mengkritik —<br>
+                        Karena di negara yang benar-benar merdeka,<br>
+                        Perbedaan pendapat bukanlah pengkhianatan, itu hak asasi setiap warga negara.
+                    </p>
+                </div>
+                
+                <p class="text-right text-sm text-slate-500 mt-10 italic">— Ikromwalidaini</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Prinsip Demokrasi -->
+    <section id="prinsip" class="py-24 px-6 relative z-10">
+        <div class="max-w-3xl mx-auto text-center reveal">
+            <h3 class="text-2xl md:text-3xl font-serif font-bold mb-8 text-amber-400">Prinsip Demokrasi yang Tak Boleh Dilupakan</h3>
+            <div class="glow-divider w-32 mx-auto mb-10"></div>
+            
+            <div class="grid md:grid-cols-2 gap-6 text-left">
+                <div class="bg-slate-800/40 p-6 rounded-xl border border-slate-700/50">
+                    <h4 class="text-amber-400 font-semibold mb-2"><i class="fa fa-balance-scale mr-2"></i> Kedaulatan Rakyat</h4>
+                    <p class="text-slate-400 text-sm">Kekuasaan tertinggi ada di tangan rakyat, bukan di tangan pemimpin. Pemimpin adalah pelaksana kehendak rakyat, bukan penguasa mutlak.</p>
+                </div>
+                <div class="bg-slate-800/40 p-6 rounded-xl border border-slate-700/50">
+                    <h4 class="text-amber-400 font-semibold mb-2"><i class="fa fa-gavel mr-2"></i> Supremasi Hukum</h4>
+                    <p class="text-slate-400 text-sm">Di hadapan hukum semua sama, tak ada yang kebal hukum. Kebijakan pemimpin harus tetap dalam koridor hukum dan konstitusi.</p>
+                </div>
+                <div class="bg-slate-800/40 p-6 rounded-xl border border-slate-700/50">
+                    <h4 class="text-amber-400 font-semibold mb-2"><i class="fa fa-comments mr-2"></i> Partisipasi Publik</h4>
+                    <p class="text-slate-400 text-sm">Kebijakan strategis harus melibatkan konsultasi publik yang bermakna, bukan sekadar formalitas untuk sah-sah saja.</p>
+                </div>
+                <div class="bg-slate-800/40 p-6 rounded-xl border border-slate-700/50">
+                    <h4 class="text-amber-400 font-semibold mb-2"><i class="fa fa-eye mr-2"></i> Akuntabilitas</h4>
+                    <p class="text-slate-400 text-sm">Pemimpin wajib terbuka dan dapat dipertanggungjawabkan atas setiap keputusan yang diambil. Kerahasiaan bukan tameng untuk menyembunyikan ketidakadilan.</p>
+                </div>
+            </div>
+            
+            <div class="mt-12 p-6 bg-blue-900/20 rounded-xl border border-blue-500/20 text-left">
+                <p class="text-slate-300 text-sm leading-relaxed">
+                    ⚠️ <strong class="text-blue-400">Catatan Penting:</strong> Tulisan ini adalah ekspresi hak berpendapat yang dijamin oleh Undang-Undang Dasar 1945. Kritik disampaikan dengan niat membangun dan memperbaiki, bukan untuk menabrak hukum atau menghasut. Setiap kebijakan pemerintahan memiliki konteks dan pertimbangan yang kompleks. Silakan sampaikan pandangan yang berbeda dengan cara yang santun dan berbasis fakta. Mari kita terus berdoa dan berikhtiar untuk Indonesia yang semakin adil dan sejahtera bagi semua.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Penutup -->
+    <section class="py-16 px-6 border-t border-slate-800/50 relative z-10">
+        <div class="max-w-2xl mx-auto text-center reveal">
+            <p class="text-xl md:text-2xl font-serif text-amber-300 italic mb-6">
+                "Pemimpin yang hebat bukanlah yang tak pernah dikritik,<br>
+                Tapi yang tetap mendengarkan — bahkan ketika kritik itu menyakitkan."
+            </p>
+            <p class="text-slate-500">— Ikromwalidaini</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12 px-6 border-t border-slate-800/50 relative z-10">
+        <div class="max-w-4xl mx-auto text-center">
+            <div class="glow-divider w-24 mx-auto mb-6"></div>
+            <p class="text-slate-400 text-sm mb-3">
+                © 2026 <span class="text-amber-400 font-semibold">Ikromwalidaini</span> — Hak Berpendapat adalah Hak Asasi Manusia
+            </p>
+            <p class="text-slate-600 text-xs">
+                "Demokrasi: Mendengarkan yang berbeda, menghargai yang berbeda, menyatukan yang beragam."
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Muncul elemen saat di-scroll
+        const revealElements = document.querySelectorAll('.reveal');
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, { threshold: 0.1 });
+        
+        revealElements.forEach(el => observer.observe(el));
+        
+        // Navbar efek saat di-scroll
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.style.background = 'rgba(5, 5, 8, 0.92)';
+            } else {
+                navbar.style.background = 'rgba(5, 5, 8, 0.75)';
+            }
+        });
+        
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
